@@ -89,6 +89,8 @@ public class Logic {
 
 	public void logicPawn() {
 		if (isWhite == true) {
+			int currentRow = savedPosition / 10;
+			int currentColum = savedPosition % 10;
 
 		} else {
 
