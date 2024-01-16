@@ -87,34 +87,61 @@ public class Logic {
 
 	}
 
-	public void logicPawn() {
+	public void logicPawn(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
+		int destinationPiece = chessArray[destinationRow][destinationColum];
+		int pieceType = 1;
 		if (isWhite == true) {
-			int currentRow = savedPosition / 10;
-			int currentColum = savedPosition % 10;
+			if (destinationColum == currentColum && destinationRow == currentRow + 1 && destinationPiece == 0) {
+				if (destinationRow == 7) {
+
+				}
+			}
+
+		} else if (isWhite == false) {
+			if (destinationColum == currentColum && destinationRow == currentRow - 1 && destinationPiece == 0) {
+				if (destinationRow == 0) {
+					movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+					promotePiece();
+				}
+			}
+		}
+	}
+
+	public void logicTower(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
+		if (isWhite == true) {
+
+		} else {
+
+		}
+
+	}
+
+	public void logicKnight(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
+		int destinationPiece = chessArray[destinationRow][destinationColum];
+		if (isWhite == true) {
 
 		} else {
 
 		}
 	}
 
-	public void logicTower() {
-		if (isWhite == true) {
-
-		} else {
-
-		}
-
-	}
-
-	public void logicKnight() {
-		if (isWhite == true) {
-
-		} else {
-
-		}
-	}
-
-	public void logicBishop() {
+	public void logicBishop(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
 		if (isWhite == true) {
 
 		} else {
@@ -122,7 +149,11 @@ public class Logic {
 		}
 	}
 
-	public void logicQueen() {
+	public void logicQueen(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
 		if (isWhite == true) {
 
 		} else {
@@ -130,11 +161,23 @@ public class Logic {
 		}
 	}
 
-	public void logicKing() {
+	public void logicKing(int btnname) {
+		int currentRow = savedPosition / 10;
+		int currentColum = savedPosition % 10;
+		int destinationRow = btnname / 10;
+		int destinationColum = btnname % 10;
 		if (isWhite == true) {
 
 		} else {
 
 		}
+	}
+
+	public void promotePiece() {
+
+	}
+
+	public void movePiece(int currentRow, int currentColum, int destinationRow, int destinationColum, int pieceType) {
+
 	}
 }
