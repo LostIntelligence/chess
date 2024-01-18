@@ -1,5 +1,6 @@
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("unused")
 public class Logic {
 	Boolean firstClick = true;
 	int savedPosition = 0;
@@ -28,13 +29,13 @@ public class Logic {
 	 * 
 	 */
 	int[][] chessArray = { { 02, 03, 04, 06, 05, 04, 03, 02 },
-			{ 01, 01, 01, 01, 01, 01, 01, 01 },
-			{ 00, 00, 00, 00, 00, 00, 00, 00 },
-			{ 00, 00, 00, 00, 00, 00, 00, 00 },
-			{ 00, 00, 00, 00, 00, 00, 00, 00 },
-			{ 00, 00, 00, 00, 00, 00, 00, 00 },
-			{ 11, 11, 11, 11, 11, 11, 11, 11 },
-			{ 12, 13, 14, 16, 15, 14, 13, 12 } };
+			/*           */{ 01, 01, 01, 01, 01, 01, 01, 01 },
+			/*           */{ 00, 00, 00, 00, 00, 00, 00, 00 },
+			/*           */{ 00, 00, 00, 00, 00, 00, 00, 00 },
+			/*           */{ 00, 00, 00, 00, 00, 00, 00, 00 },
+			/*           */{ 00, 00, 00, 00, 00, 00, 00, 00 },
+			/*           */{ 11, 00, 11, 11, 11, 11, 11, 11 },
+			/*           */{ 12, 00, 14, 16, 15, 14, 13, 12 } };
 
 	public int[][] getArray() {
 		return chessArray;
@@ -116,7 +117,7 @@ public class Logic {
 				default:
 					break;
 			}
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + succesfulMove);
+
 			if (succesfulMove == true) {
 				firstClick = true;
 				if (whosTurn == 1) {
@@ -143,8 +144,9 @@ public class Logic {
 			if (destinationColum == currentColum && destinationRow == currentRow + 1 && destinationPiece == 0) {
 				// moving Straight
 				if (destinationRow == 7) {
+					pieceType = promotePiece(pieceType);
 					movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-					promotePiece();
+
 					return true;
 				}
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
@@ -158,7 +160,7 @@ public class Logic {
 			if (destinationColum == currentColum && destinationRow == currentRow - 1 && destinationPiece == 0) {
 				if (destinationRow == 0) {
 					movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-					promotePiece();
+					promotePiece(pieceType);
 					return true;
 				}
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
@@ -231,7 +233,14 @@ public class Logic {
 		}
 	}
 
-	public void promotePiece() {
+	public int promotePiece(int pieceType) {
+		int chosenPieceIndex = JOptionPane.showOptionDialog(null, "Choose a replacement piece", "Promotion",
+				JOptionPane.YES_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null,
+				new String[] { "Queen ", "Knight", "Bishop", "Tower" }, null);
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + chosenPieceIndex);
+
+		return chosenPieceIndex;
 
 	}
 
