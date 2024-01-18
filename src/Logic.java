@@ -5,7 +5,7 @@ public class Logic {
 	int savedPosition = 0;
 	int whosTurn = 1;
 	int selectedPiece;
-	Boolean isWhite = false;
+	Boolean isWhite = true;
 	/*
 	 * White Side
 	 * whosTurn = 1
@@ -70,24 +70,69 @@ public class Logic {
 				JOptionPane.showMessageDialog(null, "Its not your turn", "WARN", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (firstClick == false) {
-			int row = btnname / 10;
-			int colum = btnname % 10;
-			chessArray[row][colum] = selectedPiece;
-			row = savedPosition / 10;
-			colum = savedPosition % 10;
-			chessArray[row][colum] = 0;
-			firstClick = true;
-			if (whosTurn == 1) {
-				whosTurn = 0;
-			} else if (whosTurn == 0) {
-				whosTurn = 1;
+			Boolean succesfulMove = false;
+			if (selectedPiece > 10) {
+				isWhite = false;
+			} else {
+				isWhite = true;
+			}
+			switch (selectedPiece) {
+				case 1:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 2:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 3:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 4:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 5:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 6:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 11:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 12:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 13:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 14:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 15:
+					succesfulMove = logicPawn(btnname);
+					break;
+				case 16:
+					succesfulMove = logicPawn(btnname);
+					break;
+				default:
+					break;
+			}
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + succesfulMove);
+			if (succesfulMove == true) {
+				firstClick = true;
+				if (whosTurn == 1) {
+					whosTurn = 0;
+				} else if (whosTurn == 0) {
+					whosTurn = 1;
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Not a legal move", "WARN", JOptionPane.WARNING_MESSAGE);
 			}
 
 		}
 
 	}
 
-	public void logicPawn(int btnname) {
+	public Boolean logicPawn(int btnname) {
 		int currentRow = savedPosition / 10;
 		int currentColum = savedPosition % 10;
 		int destinationRow = btnname / 10;
@@ -96,19 +141,32 @@ public class Logic {
 		int pieceType = 1;
 		if (isWhite == true) {
 			if (destinationColum == currentColum && destinationRow == currentRow + 1 && destinationPiece == 0) {
+				// moving Straight
 				if (destinationRow == 7) {
-
+					movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+					promotePiece();
+					return true;
 				}
+				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+				return true;
+			} else if (false) {
+				// Taking Diagonally
 			}
 
 		} else if (isWhite == false) {
+			pieceType = pieceType + 10;
 			if (destinationColum == currentColum && destinationRow == currentRow - 1 && destinationPiece == 0) {
 				if (destinationRow == 0) {
 					movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
 					promotePiece();
+					return true;
 				}
+				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+				return true;
 			}
 		}
+		return false;
+
 	}
 
 	public void logicTower(int btnname) {
@@ -178,6 +236,7 @@ public class Logic {
 	}
 
 	public void movePiece(int currentRow, int currentColum, int destinationRow, int destinationColum, int pieceType) {
-
+		chessArray[currentRow][currentColum] = 0;
+		chessArray[destinationRow][destinationColum] = pieceType;
 	}
 }
