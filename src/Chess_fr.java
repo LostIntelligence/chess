@@ -118,8 +118,8 @@ public class Chess_fr implements ActionListener {
 		for (int row = 0; row < 8; row++) {
 			for (int colum = 0; colum < 8; colum++) {
 				int currentvalue = chessArray[row][colum];
-				System.out.println("");
-				System.out.println("Populating: " + row + "" + colum);
+				// System.out.println("");
+				// System.out.println("Populating: " + row + "" + colum);
 				switch (currentvalue) {
 					case 1:
 						buttons[row][colum].setIcon(new ImageIcon(pawnW));
@@ -158,7 +158,7 @@ public class Chess_fr implements ActionListener {
 						buttons[row][colum].setIcon(new ImageIcon(kingB));
 						break;
 					default:
-						System.out.println("Empty Tile");
+						// System.out.println("Empty Tile");
 						buttons[row][colum].setIcon(null);
 						break;
 				}
