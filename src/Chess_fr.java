@@ -87,8 +87,6 @@ public class Chess_fr implements ActionListener {
 			buttons[rows][colums].setBorderPainted(false);
 			btnname = Integer.toString(rows * 10 + colums);
 			buttons[rows][colums].setName(btnname);
-			System.out.println(rows + " " + colums);
-			System.out.println(btnname);
 			if (colums == 7) {
 				colums = -1;
 				rows++;
@@ -101,13 +99,9 @@ public class Chess_fr implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(((Component) e.getSource()).getName());
 		String btn = ((Component) e.getSource()).getName();
-		System.out.printf("%n " + btn);
-
 		System.out.printf("%n" + "Debug: Actionlistener");
 		logic.run(btn);
-
 		setPiecesOnBoard();
 
 	}
