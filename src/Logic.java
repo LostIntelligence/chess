@@ -1,6 +1,5 @@
 import javax.swing.JOptionPane;
 
-@SuppressWarnings("unused")
 public class Logic {
 	Boolean firstClick = true;
 	int savedPosition = 0;
@@ -188,8 +187,8 @@ public class Logic {
 	}
 
 	public Boolean logicTower(int btnname) {
+		boolean stop = false;
 		boolean clear = true;
-		boolean testComplete = false;
 		int currentRow = savedPosition / 10;
 		int currentColum = savedPosition % 10;
 		int destinationRow = btnname / 10;
@@ -204,13 +203,31 @@ public class Logic {
 						break;
 					}
 				}
-			} else {
+				for (int i = 0; stop == false; i++) {
+					if (currentRow + i == destinationRow) {
+						stop = true;
+					}
+					if (i > 7) {
+						stop = true;
+						clear = false;
+					}
+				}
+			} else if (currentRow < destinationRow) {
 				for (int i = currentRow; i < destinationRow; i++) {
 					if (chessArray[i][currentColum] != 0 && chessArray[i][currentColum] != pieceType) {
 						clear = false;
 						break;
 					}
 
+				}
+				for (int i = 0; stop == false; i++) {
+					if (currentRow - i == destinationRow) {
+						stop = true;
+					}
+					if (i > 7) {
+						stop = true;
+						clear = false;
+					}
 				}
 			}
 		} else if (destinationRow == currentRow) {
@@ -221,7 +238,16 @@ public class Logic {
 						break;
 					}
 				}
-			} else {
+				for (int i = 0; stop == false; i++) {
+					if (destinationColum == currentColum - i) {
+						stop = true;
+					}
+					if (i > 7) {
+						stop = true;
+						clear = false;
+					}
+				}
+			} else if (currentColum < destinationColum) {
 				for (int i = currentColum; i < destinationColum; i++) {
 					if (chessArray[currentRow][i] != 0 && chessArray[currentRow][i] != pieceType) {
 						clear = false;
@@ -229,9 +255,22 @@ public class Logic {
 					}
 
 				}
+				for (int i = 0; stop == false; i++) {
+					if (destinationColum == currentColum + i) {
+						stop = true;
+					}
+					if (i > 7) {
+						stop = true;
+						clear = false;
+					}
+				}
 			}
 
 		}
+		if (destinationColum != currentColum && destinationRow != currentRow) {
+			clear = false;
+		}
+
 		System.out.println(clear);
 		if (isWhite == true) {
 
@@ -258,25 +297,29 @@ public class Logic {
 		int destinationPiece = chessArray[destinationRow][destinationColum];
 		int pieceType = chessArray[currentRow][currentColum];
 		if (isWhite == true) {
-			if((destinationColum == currentColum + 1 || destinationColum == currentColum - 1) && ( destinationRow == currentRow + 2 || destinationRow == currentRow - 2)&& (destinationPiece > 10 || destinationPiece == 0)) {
+			if ((destinationColum == currentColum + 1 || destinationColum == currentColum - 1)
+					&& (destinationRow == currentRow + 2 || destinationRow == currentRow - 2) && (destinationPiece > 10 || destinationPiece == 0)) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
 				return true;
 			}
-			
-			
-			if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1) && ( destinationColum == currentColum + 2 || destinationColum == currentColum - 2)&& (destinationPiece > 10 || destinationPiece == 0)) {
+
+			if ((destinationRow == currentRow + 1 || destinationRow == currentRow - 1)
+					&& (destinationColum == currentColum + 2 || destinationColum == currentColum - 2)
+					&& (destinationPiece > 10 || destinationPiece == 0)) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
 				return true;
 			}
 		} else {
-if((destinationColum == currentColum + 1 || destinationColum == currentColum - 1) && ( destinationRow == currentRow + 2 || destinationRow == currentRow - 2) && (destinationPiece < 10)) {
-			movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-			return true;
+			if ((destinationColum == currentColum + 1 || destinationColum == currentColum - 1)
+					&& (destinationRow == currentRow + 2 || destinationRow == currentRow - 2) && (destinationPiece < 10)) {
+				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+				return true;
 			}
-if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1) && ( destinationColum == currentColum + 2 || destinationColum == currentColum - 2)&& destinationPiece < 10) {
-	movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-	return true;
-}
+			if ((destinationRow == currentRow + 1 || destinationRow == currentRow - 1)
+					&& (destinationColum == currentColum + 2 || destinationColum == currentColum - 2) && destinationPiece < 10) {
+				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
+				return true;
+			}
 
 		}
 		return false;
@@ -291,106 +334,100 @@ if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1) && ( d
 		int destinationColum = btnname % 10;
 		int destinationPiece = chessArray[destinationRow][destinationColum];
 		int pieceType = chessArray[currentRow][currentColum];
-		
+
 		if (destinationColum > currentColum && destinationRow > currentRow) {
 			// bottom right
-			System.out.println("br");
-			for(int i = 0; destinationColum != currentColum + i ; i++) {
-				if(chessArray[currentRow+ i][currentColum + i] !=0 && i != 0) {
+			for (int i = 0; destinationColum != currentColum + i; i++) {
+				if (chessArray[currentRow + i][currentColum + i] != 0 && i != 0) {
 					clear = false;
 				}
 			}
-			for(int i = 0; stop == false ; i++) {
-				if(currentRow + i == destinationRow && destinationColum == currentColum + i) {
+			for (int i = 0; stop == false; i++) {
+				if (currentRow + i == destinationRow && destinationColum == currentColum + i) {
 					stop = true;
 				}
-				if(i > 7) {
+				if (i > 7) {
 					stop = true;
 					clear = false;
 				}
 			}
-			
-		}
-		else if (destinationColum < currentColum && destinationRow < currentRow) {
+
+		} else if (destinationColum < currentColum && destinationRow < currentRow) {
 			// top left
-			System.out.println("tl");
-			for(int i = 0; destinationColum != currentColum - i ; i++) {
-				if(chessArray[currentRow- i][currentColum - i] !=0 && i != 0) {
+			for (int i = 0; destinationColum != currentColum - i; i++) {
+				if (chessArray[currentRow - i][currentColum - i] != 0 && i != 0) {
 					clear = false;
 				}
 			}
-			for(int i = 0; stop == false ; i++) {
-				if(currentRow - i == destinationRow && destinationColum == currentColum - i) {
+			for (int i = 0; stop == false; i++) {
+				if (currentRow - i == destinationRow && destinationColum == currentColum - i) {
 					stop = true;
 				}
-				if(i > 7) {
+				if (i > 7) {
 					stop = true;
 					clear = false;
 				}
 			}
-			
-		}
-		else if (destinationColum < currentColum && destinationRow > currentRow) {
-			System.out.println("bl");
+
+		} else if (destinationColum < currentColum && destinationRow > currentRow) {
 			// bottom left
-			for(int i = 1; destinationRow != currentRow + i ; i++) {
-				if(chessArray[currentRow+ i][currentColum - i] !=0) {
+			for (int i = 1; destinationRow != currentRow + i; i++) {
+				if (chessArray[currentRow + i][currentColum - i] != 0) {
 					clear = false;
 				}
 			}
-			for(int i = 0; stop == false ; i++) {
-				if(currentRow + i == destinationRow && destinationColum == currentColum - i) {
+			for (int i = 0; stop == false; i++) {
+				if (currentRow + i == destinationRow && destinationColum == currentColum - i) {
 					stop = true;
 				}
-				if(i > 7) {
+				if (i > 7) {
 					stop = true;
 					clear = false;
 				}
 			}
-	
-}
-		else if (destinationColum > currentColum && destinationRow < currentRow) {
+
+		} else if (destinationColum > currentColum && destinationRow < currentRow) {
 			// top right
-			System.out.println("tr");
-			for(int i = 1; destinationColum != currentColum + i ; i++) {
-				if(chessArray[currentRow- i][currentColum + i] !=0) {
+			for (int i = 1; destinationColum != currentColum + i; i++) {
+				if (chessArray[currentRow - i][currentColum + i] != 0) {
 					clear = false;
 				}
 			}
-			for(int i = 0; stop == false ; i++) {
-				if(currentRow - i == destinationRow && destinationColum == currentColum + i) {
+			for (int i = 0; stop == false; i++) {
+				if (currentRow - i == destinationRow && destinationColum == currentColum + i) {
 					stop = true;
 				}
-				if(i > 7) {
+				if (i > 7) {
 					stop = true;
 					clear = false;
 				}
 			}
-	
-}else if (currentColum == destinationColum || currentRow == destinationRow) {
-	clear = false;
-	
-}
-		
+
+		} else if (currentColum == destinationColum || currentRow == destinationRow) {
+			clear = false;
+
+		}
+
 		if (isWhite == true) {
-			
-			if(clear && (destinationPiece == 0 || destinationPiece > 10)) {
+
+			if (clear && (destinationPiece == 0 || destinationPiece > 10)) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-				return true;	
+				return true;
 			}
 		} else {
-			if(clear && destinationPiece < 10) {
+			if (clear && destinationPiece < 10) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
-				return true;	
+				return true;
 			}
 		}
 		return false;
 	}
 
 	public Boolean logicQueen(int btnname) {
-			if(logicTower(btnname) == true || logicBishop(btnname)==true) {
-				return true;
-			}
+		if (logicTower(btnname) == true || logicBishop(btnname) == true) {
+
+			return true;
+		}
 		return false;
 	}
 
@@ -402,12 +439,16 @@ if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1) && ( d
 		int destinationPiece = chessArray[destinationRow][destinationColum];
 		int pieceType = chessArray[currentRow][currentColum];
 		if (isWhite == true) {
-			if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1 || destinationRow == currentRow) && (destinationColum == currentColum + 1 ||destinationColum == currentColum + 1 || destinationColum == currentColum) && (destinationPiece > 10 || destinationPiece == 0)) {
+			if ((destinationRow == currentRow + 1 || destinationRow == currentRow - 1 || destinationRow == currentRow)
+					&& (destinationColum == currentColum + 1 || destinationColum == currentColum + 1 || destinationColum == currentColum)
+					&& (destinationPiece > 10 || destinationPiece == 0)) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
 				return true;
 			}
 		} else {
-			if((destinationRow == currentRow + 1 || destinationRow == currentRow - 1 || destinationRow == currentRow) && (destinationColum == currentColum + 1 ||destinationColum == currentColum + 1 || destinationColum == currentColum) && destinationPiece < 10) {
+			if ((destinationRow == currentRow + 1 || destinationRow == currentRow - 1 || destinationRow == currentRow)
+					&& (destinationColum == currentColum + 1 || destinationColum == currentColum + 1 || destinationColum == currentColum)
+					&& destinationPiece < 10) {
 				movePiece(currentRow, currentColum, destinationRow, destinationColum, pieceType);
 				return true;
 			}
